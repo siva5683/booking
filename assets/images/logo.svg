@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 44" fill="none">
+  <defs>
+    <linearGradient id="busGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+  </defs>
+  <rect width="40" height="40" rx="12" fill="url(#busGrad)"/>
+  <path d="M14 13h12m-12 5h12m-13 9h14a2 2 0 0 0 2-2V13a2 2 0 0 0-2-2H13a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2zm1 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm10 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="50" y="28" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="24" font-weight="800" fill="#0f172a" letter-spacing="-0.5">Bus<tspan fill="#2563eb">Go</tspan></text>
+</svg>

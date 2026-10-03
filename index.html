@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BusGo - Online Bus Ticket Booking | Travel Anywhere</title>
+  <meta name="description" content="Book bus tickets online with BusGo. Find comfortable and affordable AC sleeper and luxury buses across India. Easy seat selection, instant refunds, and verified digital tickets.">
+  <meta name="keywords" content="bus booking, bus tickets, online bus booking, AC sleeper bus, BusGo, India bus travel">
+  <meta property="og:title" content="BusGo - Online Bus Ticket Booking">
+  <meta property="og:description" content="Find comfortable and affordable buses for your next journey. Book in seconds with instant digital boarding passes.">
+  <meta property="og:type" content="website">
+
+  <!-- Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       HEADER & NAVIGATION
+       ========================================================================= -->
+  <header class="header">
+    <div class="container header-container">
+      <!-- Brand Logo -->
+      <a href="#" class="brand" onclick="navigateTo('home')">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 7h8m-8 4h8m-9 8h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2zm1 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm10 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+          </svg>
+        </div>
+        <span>BusGo</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#home" class="nav-link active" data-view="home">Home</a></li>
+          <li><a href="#search" class="nav-link" data-view="results">Search Buses</a></li>
+          <li>
+            <a href="#bookings" class="nav-link" data-view="bookings">
+              My Bookings <span class="nav-badge" id="bookings-badge">0</span>
+            </a>
+          </li>
+          <li><a href="#offers" class="nav-link" data-view="offers">Offers</a></li>
+          <li><a href="#help" class="nav-link" data-view="help">Help</a></li>
+        </ul>
+      </nav>
+
+      <!-- Right Header Actions -->
+      <div class="header-actions">
+        <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--slate-100); padding: 0.35rem 0.75rem; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700; color: var(--slate-700);">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--emerald);"></span>
+          <span>Rahul Sharma</span>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Toggle Navigation Menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================= -->
+  <main>
+
+    <!-- -----------------------------------------------------------------------
+         VIEW 1: HOMEPAGE
+         ----------------------------------------------------------------------- -->
+    <div id="home-view">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="container">
+          <div class="hero-content">
+            <div class="hero-pill">
+              <span class="dot"></span>
+              <span>Over 3,500+ Verified Bus Operators Across India</span>
+            </div>
+            <h1 class="hero-title">
+              Travel Anywhere. <span>Book Your Bus in Seconds.</span>
+            </h1>
+            <p class="hero-subtitle">
+              Find comfortable and affordable buses for your next journey. Zero booking fees, instant digital tickets, and 24/7 verified travel assistance.
+            </p>
+          </div>
+
+          <!-- Prominent Search Box -->
+          <div class="search-card">
+            <div class="search-grid">
+              <!-- From City -->
+              <div class="search-field">
+                <label>From</label>
+                <div class="input-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <input type="text" id="from-input" class="search-input" placeholder="Departure city" value="Chennai" autocomplete="off">
+                </div>
+                <div class="dropdown-menu" id="from-dropdown"></div>
+              </div>
+
+              <!-- Swap Button -->
+              <button class="swap-btn" onclick="swapCities()" title="Swap Cities">⇄</button>
+
+              <!-- To City -->
+              <div class="search-field">
+                <label>To</label>
+                <div class="input-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <input type="text" id="to-input" class="search-input" placeholder="Destination city" value="Bangalore" autocomplete="off">
+                </div>
+                <div class="dropdown-menu" id="to-dropdown"></div>
+              </div>
+
+              <!-- Journey Date -->
+              <div class="search-field">
+                <label>Journey Date</label>
+                <div class="input-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                  <input type="date" id="journey-date" class="search-input">
+                </div>
+              </div>
+
+              <!-- Passengers -->
+              <div class="search-field">
+                <label>Seats</label>
+                <div class="input-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  <select id="passengers-select" class="search-input">
+                    <option value="1">1 Seat</option>
+                    <option value="2">2 Seats</option>
+                    <option value="3">3 Seats</option>
+                    <option value="4">4 Seats</option>
+                    <option value="5">5 Seats</option>
+                    <option value="6">6 Seats</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Search CTA -->
+              <button class="btn btn-primary" onclick="executeSearch()" style="height: 48px; width: 100%;">
+                Search Buses
+              </button>
+            </div>
+          </div>
+
+          <!-- Popular Routes -->
+          <div class="popular-routes">
+            <span class="label">Popular Routes:</span>
+            <button class="route-chip" onclick="selectPopularRoute('Chennai', 'Bangalore')">Chennai → Bangalore <span class="price">₹599</span></button>
+            <button class="route-chip" onclick="selectPopularRoute('Bangalore', 'Hyderabad')">Bangalore → Hyderabad <span class="price">₹799</span></button>
+            <button class="route-chip" onclick="selectPopularRoute('Chennai', 'Coimbatore')">Chennai → Coimbatore <span class="price">₹649</span></button>
+            <button class="route-chip" onclick="selectPopularRoute('Mumbai', 'Pune')">Mumbai → Pune <span class="price">₹349</span></button>
+            <button class="route-chip" onclick="selectPopularRoute('Delhi', 'Jaipur')">Delhi → Jaipur <span class="price">₹449</span></button>
+            <button class="route-chip" onclick="selectPopularRoute('Hyderabad', 'Bangalore')">Hyderabad → Bangalore <span class="price">₹749</span></button>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="trust-bar">
+            <div class="trust-item">
+              <h4>20 Million+</h4>
+              <p>Happy Bus Travelers</p>
+            </div>
+            <div class="trust-item">
+              <h4>3,500+</h4>
+              <p>Verified Bus Operators</p>
+            </div>
+            <div class="trust-item">
+              <h4>Instant Refund</h4>
+              <p>Hassle-Free Cancellations</p>
+            </div>
+            <div class="trust-item">
+              <h4>24/7 Support</h4>
+              <p>Roadside Emergency Help</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Fleets Preview Section -->
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-kicker">Premium Travel</span>
+            <h2 class="section-title">Popular Multi-Axle AC Sleeper Fleets</h2>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+            <div style="background: white; border-radius: var(--radius-lg); border: 1px solid var(--slate-200); padding: 1.5rem; box-shadow: var(--shadow-sm);">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span class="rating-badge">★ 4.9 Premium</span>
+                <span style="font-weight: 800; color: var(--primary);">from ₹899</span>
+              </div>
+              <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">GreenLine Luxury Sleepers</h3>
+              <p style="font-size: 0.8rem; color: var(--slate-500); margin-bottom: 1rem;">Volvo 9600 Multi-Axle with reading light, USB ports, and ergonomic memory foam mattresses.</p>
+              <button class="btn btn-secondary btn-sm" onclick="selectPopularRoute('Chennai', 'Bangalore')">View Buses</button>
+            </div>
+            <div style="background: white; border-radius: var(--radius-lg); border: 1px solid var(--slate-200); padding: 1.5rem; box-shadow: var(--shadow-sm);">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span class="rating-badge">★ 4.8 Eco-Friendly</span>
+                <span style="font-weight: 800; color: var(--primary);">from ₹699</span>
+              </div>
+              <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">Zingbus Pure Electric</h3>
+              <p style="font-size: 0.8rem; color: var(--slate-500); margin-bottom: 1rem;">Whisper-quiet electric coaches with zero carbon emissions and live GPS cabin tracking.</p>
+              <button class="btn btn-secondary btn-sm" onclick="selectPopularRoute('Bangalore', 'Hyderabad')">View Buses</button>
+            </div>
+            <div style="background: white; border-radius: var(--radius-lg); border: 1px solid var(--slate-200); padding: 1.5rem; box-shadow: var(--shadow-sm);">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span class="rating-badge">★ 4.7 Express</span>
+                <span style="font-weight: 800; color: var(--primary);">from ₹649</span>
+              </div>
+              <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">SRS BharatBenz Semi-Sleeper</h3>
+              <p style="font-size: 0.8rem; color: var(--slate-500); margin-bottom: 1rem;">Punctual daytime express coaches with wide calf-rests and sanitized cabins.</p>
+              <button class="btn btn-secondary btn-sm" onclick="selectPopularRoute('Mumbai', 'Pune')">View Buses</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- -----------------------------------------------------------------------
+         VIEW 2: SEARCH RESULTS & BUS LIST
+         ----------------------------------------------------------------------- -->
+    <div id="results-view" style="display: none;" class="section">
+      <div class="container">
+        <!-- Route Banner Bar -->
+        <div style="background: white; border-radius: var(--radius-lg); border: 1px solid var(--slate-200); padding: 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h2 id="results-route-title" style="font-size: 1.5rem; color: var(--slate-900);">Chennai → Bangalore</h2>
+            <p id="results-route-meta" style="font-size: 0.8rem; color: var(--slate-500);">Journey Date: 2026-10-15 · 1 Passenger</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <span id="buses-count-badge" class="nav-badge" style="font-size: 0.8rem; padding: 0.4rem 0.85rem;">6 Buses Available</span>
+            <button class="btn btn-secondary btn-sm" onclick="navigateTo('home')">Modify Search</button>
+          </div>
+        </div>
+
+        <div class="results-layout">
+          <!-- Filters Sidebar -->
+          <aside class="filters-card">
+            <div class="filter-header">
+              <h3 style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase;">Filters</h3>
+              <button onclick="resetFilters()" style="font-size: 0.75rem; color: var(--primary); font-weight: 700;">Reset All</button>
+            </div>
+
+            <!-- Price Slider -->
+            <div class="filter-group">
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; margin-bottom: 0.25rem;">
+                <span>Max Ticket Price</span>
+                <span id="price-val" style="color: var(--primary);">₹1500</span>
+              </div>
+              <input type="range" id="price-slider" min="400" max="1500" step="50" value="1500" class="price-range-slider" oninput="handleFilterChange()">
+            </div>
+
+            <!-- Bus Type Checkboxes -->
+            <div class="filter-group">
+              <h4 class="filter-title">Bus Type</h4>
+              <label class="checkbox-label"><input type="checkbox" value="AC" class="type-filter-cb" onchange="handleFilterChange()"> AC</label>
+              <label class="checkbox-label"><input type="checkbox" value="Non-AC" class="type-filter-cb" onchange="handleFilterChange()"> Non-AC</label>
+              <label class="checkbox-label"><input type="checkbox" value="Sleeper" class="type-filter-cb" onchange="handleFilterChange()"> Sleeper</label>
+              <label class="checkbox-label"><input type="checkbox" value="Seater" class="type-filter-cb" onchange="handleFilterChange()"> Seater</label>
+            </div>
+          </aside>
+
+          <!-- Main Results Content -->
+          <div>
+            <!-- Sorting Chips Toolbar -->
+            <div class="results-toolbar">
+              <div class="sort-chips">
+                <span style="font-size: 0.75rem; font-weight: 800; color: var(--slate-400); text-transform: uppercase; margin-right: 0.35rem;">Sort:</span>
+                <button class="sort-chip active" data-sort="recommended" onclick="setSort('recommended')">Recommended</button>
+                <button class="sort-chip" data-sort="cheapest" onclick="setSort('cheapest')">Cheapest</button>
+                <button class="sort-chip" data-sort="fastest" onclick="setSort('fastest')">Fastest</button>
+                <button class="sort-chip" data-sort="earliest" onclick="setSort('earliest')">Earliest</button>
+                <button class="sort-chip" data-sort="highest_rated" onclick="setSort('highest_rated')">Highest Rated</button>
+              </div>
+            </div>
+
+            <!-- Buses List Container -->
+            <div id="buses-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- -----------------------------------------------------------------------
+         VIEW 3: MY BOOKINGS DASHBOARD
+         ----------------------------------------------------------------------- -->
+    <div id="bookings-view" style="display: none;" class="section">
+      <div class="container" style="max-w: 800px;">
+        <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+          <h2 class="section-title">My Bookings</h2>
+          <p style="font-size: 0.85rem; color: var(--slate-500); margin-top: 0.25rem;">View confirmed tickets and past journeys.</p>
+        </div>
+        <div id="my-bookings-list"></div>
+      </div>
+    </div>
+
+    <!-- -----------------------------------------------------------------------
+         VIEW 4: OFFERS & COUPONS
+         ----------------------------------------------------------------------- -->
+    <div id="offers-view" style="display: none;" class="section">
+      <div class="container">
+        <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+          <span class="section-kicker">Discounts & Promos</span>
+          <h2 class="section-title">Exclusive BusGo Coupons</h2>
+          <p style="font-size: 0.85rem; color: var(--slate-500); margin-top: 0.25rem;">Apply these promo codes during payment for instant discounts.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+          <div style="background: white; border-radius: var(--radius-lg); border: 1px solid var(--slate-200); padding: 1.5rem; box-shadow: var(--shadow-sm);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+              <span class="nav-badge" style="background: #ecfdf5; color: var(--emerald);">NEW USER</span>
+              <span style="font-size: 0.75rem; color: var(--slate-400);">Valid till 31 Dec 2026</span>
+            </div>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">WELCOME20</h3>
+            <p style="font-size: 0.8rem; color: var(--slate-600); margin-bottom: 1rem;">Get 20% instant discount up to ₹250 on your very first bus booking.</p>
+            <button class="btn btn-secondary btn-sm" onclick="copyCoupon('WELCOME20')">Copy Code</button>
+          </div>
+
+          <div style="background: white; border-radius: var(--radius-lg); border: 1px solid var(--slate-200); padding: 1.5rem; box-shadow: var(--shadow-sm);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+              <span class="nav-badge" style="background: #fffbeb; color: var(--amber);">ALL USERS</span>
+              <span style="font-size: 0.75rem; color: var(--slate-400);">Valid till 31 Oct 2026</span>
+            </div>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">BUSGO100</h3>
+            <p style="font-size: 0.8rem; color: var(--slate-600); margin-bottom: 1rem;">Enjoy flat ₹100 discount on bookings above ₹600 across India.</p>
+            <button class="btn btn-secondary btn-sm" onclick="copyCoupon('BUSGO100')">Copy Code</button>
+          </div>
+
+          <div style="background: white; border-radius: var(--radius-lg); border: 1px solid var(--slate-200); padding: 1.5rem; box-shadow: var(--shadow-sm);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+              <span class="nav-badge" style="background: #eff6ff; color: var(--primary);">SLEEPER DEALS</span>
+              <span style="font-size: 0.75rem; color: var(--slate-400);">Valid till 15 Nov 2026</span>
+            </div>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">FESTIVE25</h3>
+            <p style="font-size: 0.8rem; color: var(--slate-600); margin-bottom: 1rem;">Flat 25% discount up to ₹350 on all AC Sleeper and Multi-Axle buses.</p>
+            <button class="btn btn-secondary btn-sm" onclick="copyCoupon('FESTIVE25')">Copy Code</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- -----------------------------------------------------------------------
+         VIEW 5: HELP & SUPPORT
+         ----------------------------------------------------------------------- -->
+    <div id="help-view" style="display: none;" class="section">
+      <div class="container">
+        <div class="section-header" style="text-align: center; margin-bottom: 2.5rem;">
+          <span class="section-kicker">24/7 Assistance</span>
+          <h2 class="section-title">Help & Customer Support</h2>
+          <p style="font-size: 0.85rem; color: var(--slate-500); margin-top: 0.25rem;">Find quick answers or chat with our live automated support bot.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+          <!-- FAQs -->
+          <div style="background: white; padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--slate-200); box-shadow: var(--shadow-sm);">
+            <h3 style="font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--slate-100); padding-bottom: 0.5rem;">Frequently Asked Questions</h3>
+            <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.8rem;">
+              <div>
+                <strong style="color: var(--slate-900); display: block; margin-bottom: 0.25rem;">How do I download or print my ticket?</strong>
+                <p style="color: var(--slate-600);">Go to "My Bookings" in the navigation bar to download the digital pass or print an official physical copy.</p>
+              </div>
+              <div>
+                <strong style="color: var(--slate-900); display: block; margin-bottom: 0.25rem;">How does cancellation and refund work?</strong>
+                <p style="color: var(--slate-600);">Cancellations made 6 hours before departure receive an instant 85% refund credited directly within 2 hours.</p>
+              </div>
+              <div>
+                <strong style="color: var(--slate-900); display: block; margin-bottom: 0.25rem;">What is the baggage allowance?</strong>
+                <p style="color: var(--slate-600);">Up to 2 pieces of luggage (total 20kg) can be placed in the bus luggage hold free of cost.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chatbot Assistant -->
+          <div class="chat-container">
+            <div style="background: var(--primary); color: white; padding: 0.85rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: space-between;">
+              <span>🤖 BusGo Automated Assistant</span>
+              <span style="font-size: 0.7rem; background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Online</span>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+              <div class="chat-bubble bot">Hello! I am your BusGo automated assistant. Ask me anything about tickets, luggage, or cancellations!</div>
+            </div>
+            <form onsubmit="sendChatMessage(event)" style="display: flex; border-top: 1px solid var(--slate-200); padding: 0.5rem; background: white;">
+              <input type="text" id="chat-input" placeholder="Type a message (e.g. luggage, refund)..." class="search-input" style="flex: 1; padding: 0.5rem 0.75rem; font-size: 0.8rem;">
+              <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 0.5rem;">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       MODALS: PASSENGER DETAILS, PAYMENT, DIGITAL TICKET
+       ========================================================================= -->
+
+  <!-- Modal 1: Passenger Information Form -->
+  <div class="modal-overlay" id="passenger-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 style="font-size: 1.1rem; color: var(--slate-900);">Passenger Details</h3>
+        <button class="close-btn" onclick="closePassengerModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <form onsubmit="proceedToPayment(event)">
+          <div id="passengers-form-container"></div>
+
+          <div style="margin-top: 1rem; border-top: 1px solid var(--slate-100); padding-top: 1rem;">
+            <label style="font-size: 0.75rem; font-weight: 700; color: var(--slate-700); display: block; margin-bottom: 0.25rem;">Primary Contact Mobile</label>
+            <input type="tel" value="+91 98765 43210" required class="search-input" style="padding: 0.5rem 0.75rem; margin-bottom: 0.75rem;">
+
+            <label style="font-size: 0.75rem; font-weight: 700; color: var(--slate-700); display: block; margin-bottom: 0.25rem;">Primary Contact Email</label>
+            <input type="email" value="rahul.sharma@example.com" required class="search-input" style="padding: 0.5rem 0.75rem; margin-bottom: 1rem;">
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              Continue to Payment →
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Secure Payment Gateway -->
+  <div class="modal-overlay" id="payment-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 style="font-size: 1.1rem; color: var(--slate-900);">Checkout & Payment</h3>
+        <button class="close-btn" onclick="closePaymentModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="background: var(--slate-50); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--slate-200); margin-bottom: 1rem; font-size: 0.8rem;">
+          <h4 id="pay-bus-title" style="font-size: 0.95rem; color: var(--slate-900); margin-bottom: 0.2rem;"></h4>
+          <p id="pay-route-info" style="color: var(--slate-500); margin-bottom: 0.5rem;"></p>
+          <p id="pay-seats-info" style="font-weight: 700; color: var(--primary);"></p>
+        </div>
+
+        <!-- Coupon Box -->
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+          <input type="text" id="coupon-input" value="BUSGO100" placeholder="Enter coupon code" class="search-input" style="flex: 1; padding: 0.5rem 0.75rem; font-family: monospace; font-weight: 700;">
+          <button class="btn btn-secondary btn-sm" onclick="applyCoupon()">Apply</button>
+        </div>
+
+        <!-- Fare Breakdown -->
+        <div style="font-size: 0.8rem; margin-bottom: 1.25rem; border-bottom: 1px solid var(--slate-100); padding-bottom: 0.75rem;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+            <span>Base Ticket Fare</span>
+            <span id="pay-base-fare">₹0</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+            <span>Taxes & GST</span>
+            <span id="pay-taxes">₹50</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; color: var(--emerald); font-weight: 700; margin-bottom: 0.5rem;">
+            <span>Coupon Discount</span>
+            <span id="pay-discount">-₹100</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 800; border-top: 1px solid var(--slate-200); padding-top: 0.5rem; color: var(--slate-900);">
+            <span>Total Payable</span>
+            <span id="pay-total-amount" style="color: var(--primary);">₹0</span>
+          </div>
+        </div>
+
+        <!-- Pay Button -->
+        <button id="pay-submit-btn" class="btn btn-primary" style="width: 100%; padding: 0.85rem;" onclick="executePayment()">
+          <span id="pay-btn-label">Pay Now</span>
+        </button>
+
+        <p style="text-align: center; font-size: 0.7rem; color: var(--slate-400); margin-top: 0.75rem;">
+          🔒 256-bit SSL encrypted. 100% RBI & PCI-DSS compliant payment simulation.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Digital E-Ticket Boarding Pass -->
+  <div class="modal-overlay" id="ticket-modal">
+    <div class="modal-card" style="max-width: 650px;">
+      <div class="modal-header" style="background: var(--primary); color: white;">
+        <h3 style="font-size: 1.1rem;">🎉 Digital Bus Boarding Pass</h3>
+        <button class="close-btn" style="color: white;" onclick="closeTicketModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="ticket-wrapper">
+          <div class="ticket-header">
+            <div>
+              <h4 style="font-size: 1.25rem; font-weight: 800;">BusGo E-Ticket</h4>
+              <span style="font-size: 0.75rem; opacity: 0.9;">Verified Digital Passenger Pass</span>
+            </div>
+            <div style="text-align: right; font-family: monospace;">
+              <div style="font-size: 0.7rem; opacity: 0.8;">PNR NUMBER</div>
+              <div id="ticket-pnr" style="font-size: 1.2rem; font-weight: 800; color: #fde047;"></div>
+              <div id="ticket-booking-id" style="font-size: 0.65rem;"></div>
+            </div>
+          </div>
+
+          <div class="ticket-body">
+            <div class="ticket-route-strip">
+              <div>
+                <span style="font-size: 0.65rem; font-weight: 800; color: var(--slate-400); text-transform: uppercase;">Origin</span>
+                <h4 id="ticket-from-city" style="font-size: 1.2rem; color: var(--slate-900);"></h4>
+                <span id="ticket-boarding-stop" style="font-size: 0.75rem; color: var(--primary); font-weight: 700;"></span>
+              </div>
+              <div style="text-align: center; font-size: 0.75rem; font-weight: 700; color: var(--emerald);">
+                → Confirmed →
+              </div>
+              <div style="text-align: right;">
+                <span style="font-size: 0.65rem; font-weight: 800; color: var(--slate-400); text-transform: uppercase;">Destination</span>
+                <h4 id="ticket-to-city" style="font-size: 1.2rem; color: var(--slate-900);"></h4>
+                <span id="ticket-dropping-stop" style="font-size: 0.75rem; color: var(--emerald); font-weight: 700;"></span>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; align-items: center;">
+              <div>
+                <p style="font-size: 0.75rem; color: var(--slate-500); margin-bottom: 0.25rem;">
+                  Operator: <strong id="ticket-operator" style="color: var(--slate-900);"></strong>
+                </p>
+                <p style="font-size: 0.75rem; color: var(--slate-500); margin-bottom: 0.5rem;">
+                  Bus Number: <strong id="ticket-vehicle" style="color: var(--slate-900);"></strong>
+                </p>
+                <p style="font-size: 0.75rem; color: var(--slate-500); margin-bottom: 0.5rem;">
+                  Journey Date: <strong id="ticket-date" style="color: var(--slate-900);"></strong>
+                </p>
+                <div id="ticket-passengers-list"></div>
+              </div>
+
+              <!-- SVG Scannable QR Code -->
+              <div style="text-align: center; border-left: 1px solid var(--slate-200); padding-left: 1rem;">
+                <svg width="100" height="100" viewBox="0 0 100 100" fill="none" style="margin: 0 auto;">
+                  <rect width="100" height="100" fill="white" />
+                  <path d="M10 10h30v30H10zM15 15v20h20V15H15zm5 5h10v10H20V20z" fill="#0f172a" />
+                  <path d="M60 10h30v30H60zM65 15v20h20V15H65zm5 5h10v10H70V20z" fill="#0f172a" />
+                  <path d="M10 60h30v30H10zM15 65v20h20V65H15zm5 5h10v10H20V70z" fill="#0f172a" />
+                  <rect x="45" y="10" width="10" height="20" fill="#0f172a" />
+                  <rect x="10" y="45" width="20" height="10" fill="#0f172a" />
+                  <rect x="45" y="45" width="20" height="20" fill="#1d4ed8" />
+                  <rect x="70" y="45" width="20" height="10" fill="#0f172a" />
+                  <rect x="45" y="70" width="15" height="20" fill="#0f172a" />
+                  <rect x="70" y="70" width="20" height="20" fill="#0f172a" />
+                </svg>
+                <span style="font-size: 0.65rem; font-family: monospace; color: var(--slate-400);">SCAN TO BOARD</span>
+              </div>
+            </div>
+
+            <div class="ticket-divider"></div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span style="font-size: 0.7rem; color: var(--slate-400); text-transform: uppercase; font-weight: 700;">Total Fare Paid</span>
+                <div id="ticket-fare-paid" style="font-size: 1.25rem; font-weight: 800; color: var(--primary);"></div>
+              </div>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-primary btn-sm" onclick="downloadTicketFile()">Download Ticket</button>
+                <button class="btn btn-outline btn-sm" onclick="printTicket()">Print</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Pop-up -->
+  <div class="toast" id="toast">
+    <span>✓</span>
+    <span id="toast-text">Notification message</span>
+  </div>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="brand" style="color: white; margin-bottom: 0.85rem;">
+            <span>BusGo</span>
+          </div>
+          <p style="line-height: 1.6; max-width: 340px; margin-bottom: 1rem;">
+            "Making bus travel simple, affordable, and convenient." Book intercity sleeper, AC, and luxury buses across India in seconds with verified digital tickets.
+          </p>
+          <span style="font-size: 0.75rem; color: var(--slate-500);">Official Government Authorized Bus Booking Partner</span>
+        </div>
+
+        <div class="footer-col">
+          <h5>Quick Links</h5>
+          <ul>
+            <li><a href="#home" onclick="navigateTo('home')">Home</a></li>
+            <li><a href="#search" onclick="navigateTo('results')">Search Buses</a></li>
+            <li><a href="#bookings" onclick="navigateTo('bookings')">My Bookings</a></li>
+            <li><a href="#offers" onclick="navigateTo('offers')">Offers</a></li>
+            <li><a href="#help" onclick="navigateTo('help')">Help & FAQs</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Top Routes</h5>
+          <ul>
+            <li><a href="#" onclick="selectPopularRoute('Chennai', 'Bangalore')">Chennai to Bangalore</a></li>
+            <li><a href="#" onclick="selectPopularRoute('Bangalore', 'Hyderabad')">Bangalore to Hyderabad</a></li>
+            <li><a href="#" onclick="selectPopularRoute('Chennai', 'Coimbatore')">Chennai to Coimbatore</a></li>
+            <li><a href="#" onclick="selectPopularRoute('Mumbai', 'Pune')">Mumbai to Pune</a></li>
+            <li><a href="#" onclick="selectPopularRoute('Delhi', 'Jaipur')">Delhi to Jaipur</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Legal & Safety</h5>
+          <ul>
+            <li><a href="#help" onclick="navigateTo('help')">Terms of Service</a></li>
+            <li><a href="#help" onclick="navigateTo('help')">Privacy Policy</a></li>
+            <li><a href="#help" onclick="navigateTo('help')">Cancellation Policy</a></li>
+            <li><a href="#help" onclick="navigateTo('help')">Luggage Rules</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 BusGo Technologies Pvt. Ltd. All rights reserved.</p>
+        <p>Crafted for safe journeys across India</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Vanilla JavaScript Script Reference -->
+  <script src="script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "BusGo - Online Bus Ticket Booking",
+  "description": "Book bus tickets online with BusGo. Compare buses, select seats, enjoy secure payments, and get instant digital tickets for top routes across India.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

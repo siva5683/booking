@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BusGo - Online Bus Ticket Booking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Plus Jakarta Sans', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
+    h1, h2, h3, h4, .font-heading { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+  <!-- Top Navigation -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-700 to-sky-500 flex items-center justify-center text-white shadow-md">
+          <i data-lucide="bus" class="w-5 h-5"></i>
+        </div>
+        <span class="text-2xl font-extrabold text-blue-900 font-heading">Bus<span class="text-blue-600">Go</span></span>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600">
+        <a href="#hero" class="text-blue-600 font-bold">Home</a>
+        <a href="#buses" class="hover:text-blue-600">Search Buses</a>
+        <a href="#offers" class="hover:text-blue-600">Offers</a>
+        <a href="#help" class="hover:text-blue-600">Help</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-bold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-xl">Demo User</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero" class="bg-gradient-to-b from-blue-900 via-blue-800 to-indigo-900 text-white py-16 px-4">
+    <div class="max-w-5xl mx-auto text-center">
+      <span class="inline-block px-3 py-1 bg-white/10 rounded-full text-xs font-semibold text-blue-200 mb-4">
+        Over 3,500+ Bus Operators Across India
+      </span>
+      <h1 class="text-3xl sm:text-5xl font-extrabold font-heading mb-4">
+        Travel Anywhere. Book Your Bus in Seconds.
+      </h1>
+      <p class="text-sm sm:text-base text-blue-100 max-w-xl mx-auto mb-8">
+        Find comfortable and affordable buses for your next journey.
+      </p>
+
+      <!-- Search Box -->
+      <div class="bg-white rounded-3xl p-6 text-slate-900 shadow-2xl grid grid-cols-1 md:grid-cols-4 gap-3 text-left">
+        <div>
+          <label class="block text-xs font-bold text-slate-400 uppercase mb-1">From</label>
+          <input id="fromCity" type="text" value="Chennai" class="w-full p-2.5 bg-slate-50 border rounded-xl font-bold text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-400 uppercase mb-1">To</label>
+          <input id="toCity" type="text" value="Bangalore" class="w-full p-2.5 bg-slate-50 border rounded-xl font-bold text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Date</label>
+          <input id="journeyDate" type="date" value="2026-10-15" class="w-full p-2.5 bg-slate-50 border rounded-xl font-bold text-sm">
+        </div>
+        <div class="flex items-end">
+          <button onclick="renderBuses()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition-all">
+            Search Buses
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Buses List -->
+  <section id="buses" class="py-12 max-w-5xl mx-auto px-4 flex-1">
+    <h2 class="text-2xl font-bold font-heading mb-6">Available Buses</h2>
+    <div id="bus-list" class="space-y-4"></div>
+  </section>
+
+  <!-- Digital Ticket Modal -->
+  <div id="ticket-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+    <div class="bg-white rounded-3xl p-6 max-w-lg w-full space-y-4 shadow-2xl border">
+      <div class="flex justify-between items-center pb-3 border-b">
+        <h3 class="font-bold text-lg text-blue-900">🎉 Booking Confirmed!</h3>
+        <button onclick="closeTicket()" class="text-slate-400 hover:text-slate-800 font-bold">✕</button>
+      </div>
+      <div id="ticket-content" class="bg-slate-50 p-4 rounded-2xl border text-xs space-y-2 font-mono"></div>
+      <button onclick="closeTicket()" class="w-full py-2.5 bg-blue-600 text-white font-bold rounded-xl">
+        Done
+      </button>
+    </div>
+  </div>
+
+  <footer class="bg-slate-900 text-slate-400 py-8 text-center text-xs mt-auto">
+    <p>© 2026 BusGo Technologies. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const BUSES = [
+      { id: '1', name: 'GreenLine Travels', type: 'AC Sleeper (2+1)', dep: '10:30 PM', arr: '06:00 AM', dur: '7h 30m', price: 899, rating: 4.8 },
+      { id: '2', name: 'IntrCity SmartBus', type: 'Volvo Multi-Axle AC Sleeper', dep: '11:00 PM', arr: '05:45 AM', dur: '6h 45m', price: 1199, rating: 4.9 },
+      { id: '3', name: 'SRS Travels', type: 'BharatBenz AC Semi-Sleeper', dep: '06:00 AM', arr: '01:00 PM', dur: '7h 00m', price: 649, rating: 4.4 },
+      { id: '4', name: 'Zingbus Electric', type: 'Pure Electric AC Seater', dep: '02:30 PM', arr: '09:00 PM', dur: '6h 30m', price: 699, rating: 4.7 }
+    ];
+
+    function renderBuses() {
+      const from = document.getElementById('fromCity').value;
+      const to = document.getElementById('toCity').value;
+      const list = document.getElementById('bus-list');
+
+      list.innerHTML = BUSES.map(b => `
+        <div class="bg-white p-5 rounded-2xl border shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="font-extrabold text-base text-slate-900 font-heading">${b.name}</span>
+              <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">★ ${b.rating}</span>
+            </div>
+            <p class="text-xs text-slate-500">${b.type}</p>
+            <div class="flex gap-4 text-xs font-mono font-bold text-slate-800 mt-2">
+              <span>${b.dep} (${from})</span>
+              <span class="text-slate-400 font-normal">→ ${b.dur} →</span>
+              <span>${b.arr} (${to})</span>
+            </div>
+          </div>
+          <div class="text-right flex sm:flex-col items-center sm:items-end justify-between gap-2 border-t sm:border-t-0 pt-2 sm:pt-0">
+            <div>
+              <span class="text-2xl font-extrabold text-slate-900 font-mono">₹${b.price}</span>
+              <span class="text-[10px] text-slate-400 block">per seat</span>
+            </div>
+            <button onclick="bookBus('${b.name}', '${b.price}')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-xs">
+              Book Ticket
+            </button>
+          </div>
+        </div>
+      `).join('');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function bookBus(name, price) {
+      const from = document.getElementById('fromCity').value;
+      const to = document.getElementById('toCity').value;
+      const date = document.getElementById('journeyDate').value;
+      const pnr = 'PNR-' + Math.floor(100000 + Math.random() * 900000);
+
+      document.getElementById('ticket-content').innerHTML = `
+        <div><strong>BUS OPERATOR:</strong> ${name}</div>
+        <div><strong>ROUTE:</strong> ${from} → ${to}</div>
+        <div><strong>DATE:</strong> ${date}</div>
+        <div><strong>PNR:</strong> ${pnr}</div>
+        <div><strong>SEATS:</strong> L3, L4 (2 Seats)</div>
+        <div class="text-blue-700 font-bold">TOTAL PAID: ₹${price * 2 + 50}</div>
+      `;
+      document.getElementById('ticket-modal').classList.remove('hidden');
+    }
+
+    function closeTicket() {
+      document.getElementById('ticket-modal').classList.add('hidden');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderBuses();
+      if (window.lucide) lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
